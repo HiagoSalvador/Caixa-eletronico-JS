@@ -1,0 +1,153 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <script>
+        let saldo = 100.5; //Float
+        let extrato = [
+            { tipo: 'Compras', valor: 50 },
+            { tipo: 'Contas', valor: 20 },
+            { tipo: 'Depósito', valor: 30 },
+            { tipo: 'Saque', valor: 10 }
+        ];
+        const senhaValida = '3589';
+
+        let nomeUsuario = prompt('Qual é o seu nome?');
+        alert('Olá ' + nomeUsuario + ', é um prazer ter você por aqui!');
+
+        function inicio() {
+            let escolha = parseInt(prompt('Selecione uma opção: \n1.) Saldo \n2.) Depósito \n3.) Saque \n4.) Extrato \n5.) Transferência \n6.) Sair'));
+
+            switch (escolha) {
+                case 1:
+                case 3:
+                case 4:
+                case 5:
+                    validarSenha(executarOpcao, escolha);
+                    break;
+                case 2:
+                    fazer_deposito();
+                    break;
+                case 6:
+                    sair();
+                    break;
+                default:
+                    erro();
+                    break;
+            }
+        }
+
+        function validarSenha(voltar, opcao) {
+            let senha = prompt('Por favor, informe sua senha:');
+            if (senha !== senhaValida) {
+                alert('Senha incorreta. Acesso não autorizado.');
+                validarSenha(voltar, opcao);
+            } else {
+                voltar(opcao);
+            }
+        }
+
+        function executarOpcao(opcao) {
+            switch (opcao) {
+                case 1:
+                    ver_saldo();
+                    break;
+                case 3:
+                    fazer_saque();
+                    break;
+                case 4:
+                    ver_extrato();
+                    break;
+                case 5:
+                    fazer_transferencia();
+                    break;
+            }
+        }
+
+        function ver_saldo() {
+            alert('Seu saldo atual é: ' + saldo);
+            inicio();
+        }
+
+        function fazer_deposito() {
+            let deposito = parseFloat(prompt('Qual o valor para depósito?'));
+            if (isNaN(deposito) || deposito <= 0 || deposito === '') {
+                alert('Operação não autorizada. Por favor, insira um valor válido para depósito.');
+                inicio();
+                return;
+            } else {
+                saldo += deposito;
+                extrato.push({ tipo: 'Depósito', valor: deposito });
+                ver_saldo();
+            }
+        }
+
+        function fazer_saque() {
+            let saque = parseFloat(prompt('Qual o valor para saque?'));
+            if (isNaN(saque) || saque <= 0 || saque === '') {
+                alert('Operação não autorizada. Por favor, insira um valor válido para saque.');
+            } else {
+                if (saque > saldo) {
+                    alert('Operação não autorizada. Você não pode sacar mais do que o saldo disponível.');
+                } else {
+                    saldo -= saque;
+                    extrato.push({ tipo: 'Saque', valor: saque });
+                    ver_saldo();
+                }
+            }
+        }
+
+        function fazer_transferencia() {
+            let valorTransferencia = parseFloat(prompt('Qual o valor da transferência?'));
+
+            if (isNaN(valorTransferencia) || valorTransferencia <= 0 || valorTransferencia === '') {
+                alert('Operação não autorizada. Por favor, insira um valor válido para transferência.');
+                inicio();
+                return;
+            }
+
+            if (valorTransferencia > saldo) {
+                alert('Operação não autorizada. Você não possui saldo suficiente para realizar a transferência.');
+                inicio();
+                return;
+            }
+
+            let numeroConta = parseInt(prompt('Informe o número da conta para transferência:'));
+
+            if (isNaN(numeroConta)) {
+                alert('Número de conta inválido. Por favor, insira um número válido.');
+                inicio();
+                return;
+            }
+
+            saldo -= valorTransferencia;
+            extrato.push({ tipo: 'Transferência para conta ' + numeroConta, valor: valorTransferencia });
+
+            alert('Transferência de R$ ' + valorTransferencia.toFixed(2) + ' realizada com sucesso para a conta ' + numeroConta);
+            inicio();
+        }
+
+        function ver_extrato() {
+            let extratoString = 'Extrato:\n';
+            for (let i = 0; i < extrato.length; i++) {
+                extratoString += extrato[i].tipo + ': R$ ' + extrato[i].valor.toFixed(2) + '\n';
+            }
+            alert(extratoString);
+            inicio();
+        }
+
+        function erro() {
+            alert('Por favor, informe um número entre 1 e 6');
+            inicio();
+        }
+
+        function sair() {
+            alert(nomeUsuario + ', foi um prazer ter você por aqui!');
+            window.close();
+        }
+
+        inicio();
+    </script>
+<title></title>
+</head>
+<body>
+</body>
+</html>
