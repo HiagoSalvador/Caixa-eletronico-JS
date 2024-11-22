@@ -31,8 +31,6 @@ Este projeto é uma simulação de um caixa eletrônico, desenvolvido como parte
 
 ---
 
-## Link do Repositório
-
-Para clonar este projeto, utilize o seguinte link:
-
- git clone https://github.com/HiagoSalvador/Caixa-eletronico-JS.git
+ 1. Clone este repositório:
+   ```bash
+   git clone https://github.com/HiagoSalvador/Caixa-eletronico-JS.git
